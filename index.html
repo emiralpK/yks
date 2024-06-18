@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YKS Sıralama Hesaplama</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>YKS Sıralama Hesaplama</h1>
+        <form id="siralamaForm">
+            <h2>TYT Netleri</h2>
+            <label for="turkce">Türkçe Neti:</label>
+            <input type="number" id="turkce" name="turkce" required>
+            
+            <label for="matematik">Matematik Neti:</label>
+            <input type="number" id="matematik" name="matematik" required>
+            
+            <label for="fen">Fen Bilimleri Neti:</label>
+            <input type="number" id="fen" name="fen" required>
+            
+            <label for="sosyal">Sosyal Bilimler Neti:</label>
+            <input type="number" id="sosyal" name="sosyal" required>
+            
+            <h2>AYT Netleri</h2>
+            <label for="aytMatematik">AYT Matematik Neti:</label>
+            <input type="number" id="aytMatematik" name="aytMatematik" required>
+            
+            <label for="aytFizik">AYT Fizik Neti:</label>
+            <input type="number" id="aytFizik" name="aytFizik" required>
+            
+            <label for="aytKimya">AYT Kimya Neti:</label>
+            <input type="number" id="aytKimya" name="aytKimya" required>
+            
+            <label for="aytBiyoloji">AYT Biyoloji Neti:</label>
+            <input type="number" id="aytBiyoloji" name="aytBiyoloji" required>
+            
+            <label for="obp">OBP:</label>
+            <input type="number" id="obp" name="obp" required>
+            
+            <button type="submit">Hesapla</button>
+        </form>
+        <div id="sonuc"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
