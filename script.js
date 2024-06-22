@@ -11,7 +11,7 @@ app.post('/api/siralamaHesapla', (req, res) => {
     let aytPuan = data.aytMatematik * 3.0 + data.aytFizik * 2.8 + data.aytKimya * 2.7 + data.aytBiyoloji * 2.6;
     let hamPuan = tytPuan + aytPuan + (data.obp / 100) * 60;
 
-    fs.readFile('./data/siralamaData.json', (err, jsonData) => {
+    fs.readFile('./siralamaData.json', (err, jsonData) => {
         if (err) {
             res.status(500).send("Veri okunamadı.");
             return;
