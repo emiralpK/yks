@@ -1,0 +1,18 @@
+{
+    "2023": {
+        "basePuan": 600,
+        "multiplier": 200
+    },
+    "2022": {
+        "basePuan": 600,
+        "multiplier": 210
+    },
+    "2021": {
+        "basePuan": 600,
+        "multiplier": 220
+    },
+    "2020": {
+        "basePuan": 600,
+        "multiplier": 230
+    }
+}
