@@ -1,33 +1,36 @@
-document.getElementById('siralamaForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+const express = require('express');
+const app = express();
+const fs = require('fs');
 
-    let turkce = parseFloat(document.getElementById('turkce').value);
-    let matematik = parseFloat(document.getElementById('matematik').value);
-    let fen = parseFloat(document.getElementById('fen').value);
-    let sosyal = parseFloat(document.getElementById('sosyal').value);
-    let obp = parseFloat(document.getElementById('obp').value);
+app.use(express.json());
 
-    let siralama = hesaplaSiralama(turkce, matematik, fen, sosyal, obp);
-    let oncekiYilSiralama = hesaplaOncekiYilSiralama(turkce, matematik, fen, sosyal, obp);
+app.post('/api/siralamaHesapla', (req, res) => {
+    let data = req.body;
 
-    document.getElementById('sonuc').innerHTML = `
-        <p>Tahmini Sıralamanız: ${siralama}</p>
-        <p>Geçen Yıl Tahmini Sıralamanız: ${oncekiYilSiralama}</p>
-    `;
+    let tytPuan = data.turkce * 3.3 + data.matematik * 3.3 + data.fen * 3.4 + data.sosyal * 3.4;
+    let aytPuan = data.aytMatematik * 3.0 + data.aytFizik * 2.8 + data.aytKimya * 2.7 + data.aytBiyoloji * 2.6;
+    let hamPuan = tytPuan + aytPuan + (data.obp / 100) * 60;
+
+    fs.readFile('./data/siralamaData.json', (err, jsonData) => {
+        if (err) {
+            res.status(500).send("Veri okunamadı.");
+            return;
+        }
+        let siralamaData = JSON.parse(jsonData);
+        let siralama2023 = Math.round((siralamaData['2023'].basePuan - hamPuan) * siralamaData['2023'].multiplier);
+        let siralama2022 = Math.round((siralamaData['2022'].basePuan - hamPuan) * siralamaData['2022'].multiplier);
+        let siralama2021 = Math.round((siralamaData['2021'].basePuan - hamPuan) * siralamaData['2021'].multiplier);
+        let siralama2020 = Math.round((siralamaData['2020'].basePuan - hamPuan) * siralamaData['2020'].multiplier);
+
+        res.json({
+            siralama2023: siralama2023,
+            siralama2022: siralama2022,
+            siralama2021: siralama2021,
+            siralama2020: siralama2020
+        });
+    });
 });
 
-function hesaplaSiralama(turkce, matematik, fen, sosyal, obp) {
-    let tytPuan = turkce * 3.3 + matematik * 3.3 + fen * 3.4 + sosyal * 3.4;
-    let hamPuan = tytPuan + (obp / 100) * 60;
-    let siralama = Math.round((500 - hamPuan) * 200); // Basit bir hesaplama örneği
-
-    return siralama;
-}
-
-function hesaplaOncekiYilSiralama(turkce, matematik, fen, sosyal, obp) {
-    let tytPuan = turkce * 3.2 + matematik * 3.2 + fen * 3.3 + sosyal * 3.3;
-    let hamPuan = tytPuan + (obp / 100) * 60;
-    let siralama = Math.round((500 - hamPuan) * 210); // Basit bir hesaplama örneği
-
-    return siralama;
-}
+app.listen(3000, () => {
+    console.log('Server running on port 3000');
+});
